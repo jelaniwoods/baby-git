@@ -9,12 +9,13 @@ get '/' do
   list = []
   logs.each do |commit|
     line = commit.sha + " " + commit.author.name + " " + commit.date.strftime("%m-%d-%y")
-    # line += "\n"
     list.push line
   end
-  list.join("<br>").html_safe
+  list.join("<br>")
 end
 
 get "/status" do
-
+  working_dir = Dir.pwd
+  g = Git.open(working_dir, :log => Logger.new(STDOUT))
+  g.config('user.name')
 end
