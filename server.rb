@@ -12,7 +12,7 @@ get '/' do
     # line += "\n"
     list.push line
   end
-  list.join("\n")
+  list.join("<br>").html_safe
 end
 
 get "/status" do
