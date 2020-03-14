@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'git'
 require 'logger'
+require_relative 'diff'
+require_relative 'string'
 
 get '/' do
   working_dir = Dir.pwd
@@ -20,9 +22,14 @@ get "/status" do
   g = Git.open(working_dir, :log => Logger.new(STDOUT))
   g.config('user.name')
   changed_files = g.status.changed
-  @status = changed_files.to_s
+  untracked_files = g.status.untracked
+  puts "\n" * 5
+  puts g.status.pretty
+  @status = `git status`
+  @wild = g.status.pretty
   @current_branch = g.branches.select(&:current).first
   @diff = g.diff
+  @diff = WebGit::Diff.diff_to_html(g.diff.to_s)
 
   erb :status
 end

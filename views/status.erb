@@ -1,3 +1,4 @@
+<%= @wild %>
 <div class="row mb-4">
   <div class="col">
     <div class="card">
@@ -21,7 +22,7 @@
               <%#= simple_format @status.
                     gsub("(use \"git add <file>...\" to include in what will be committed)\n\n", "").
                     gsub("(use \"git add\" to track)\n", "")%>
-              <%= @status %>
+              <%= @status %>...
             </pre>
           <% end %>
 
