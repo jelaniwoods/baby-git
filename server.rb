@@ -33,3 +33,15 @@ get "/status" do
 
   erb :status
 end
+
+post "/commit" do
+  title = params[:title]
+  description = params[:description]
+  p title
+  puts "------"
+  working_dir = Dir.pwd
+  g = Git.open(working_dir, :log => Logger.new(STDOUT))
+  g.add(:all=>true)  
+  g.commit(title)
+  redirect to("/status")
+end
