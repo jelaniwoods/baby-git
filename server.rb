@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'git'
-require 'logger'
 require_relative 'diff'
 require_relative 'string'
 
@@ -11,7 +10,7 @@ get '/' do
   list = []
   logs.each do |commit|
     line = commit.sha + " " + commit.author.name + " " +
-     commit.date.strftime("%m-%d-%y") + " " + commit.message
+    commit.date.strftime("%m-%d-%y") + " " + commit.message
     list.push line
   end
   list.join("<br>")
@@ -25,6 +24,7 @@ get "/status" do
   untracked_files = g.status.untracked
   puts "\n" * 5
   puts g.status.pretty
+  puts "\n" * 5
   @status = `git status`
   @wild = g.status.pretty
   @current_branch = g.branches.select(&:current).first
